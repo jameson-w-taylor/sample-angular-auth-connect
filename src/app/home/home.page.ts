@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-home',
@@ -6,7 +8,27 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  authenticationChange$: Observable<boolean>;
+  tokenData$: Observable<any>;
 
-  constructor() {}
+  constructor(private auth: AuthenticationService) {
+    this.authenticationChange$ = auth.authenticationChange$;
+    this.tokenData$ = auth.tokenData$;
+  }
 
+  async loginClicked() {
+    try {
+      await this.auth.login();
+    } catch (err) {
+      console.log('Error logging in:', err);
+    }
+  }
+
+  async logoutClicked() {
+    await this.auth.logout();
+  }
+
+  async refreshClicked() {
+    await this.auth.refreshSession();
+  }
 }

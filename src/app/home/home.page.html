@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Auth Connect
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,12 +9,19 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">Auth Connect</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <div *ngIf="!(authenticationChange$ | async)">
+    <ion-button (click)="loginClicked()">Login</ion-button>
+  </div>
+
+  <div *ngIf="(authenticationChange$ | async)">
+    <ion-button (click)="logoutClicked()">Logout</ion-button>
+    <div>
+      <div>Currently logged in as: {{(tokenData$ | async)?.name}}</div>
+      <ion-button (click)="refreshClicked()">Refresh</ion-button>
+    </div>
   </div>
 </ion-content>
