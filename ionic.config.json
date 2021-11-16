@@ -1,0 +1,7 @@
+{
+  "name": "sample-angular-auth-connect",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
